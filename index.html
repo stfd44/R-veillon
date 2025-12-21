@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Célébrez le Nouvel An avec une expérience web immersive et magique - Compte à rebours, feux d'artifice et animations spectaculaires">
+    <meta name="keywords" content="Nouvel An, Réveillon, Compte à rebours, Feux d'artifice, Bonne Année">
+    <title>Réveillon du Nouvel An 🎉</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Settings Button -->
+    <button id="settingsBtn" class="settings-btn" aria-label="Paramètres">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m5.2-13.2l-4.2 4.2m-6 6l-4.2 4.2m13.2-5.2l-4.2-4.2m-6-6l-4.2-4.2"></path>
+        </svg>
+    </button>
+
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="settings-panel">
+        <div class="settings-content">
+            <h2>Paramètres du Compte à Rebours</h2>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="targetDate">Date cible</label>
+                    <input type="date" id="targetDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="targetTime">Heure cible</label>
+                    <input type="time" id="targetTime" class="form-control">
+                </div>
+                <div class="form-actions">
+                    <button id="saveSettings" class="btn btn-primary">Enregistrer</button>
+                    <button id="closeSettings" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 1: Interior Chalet (Before Midnight) -->
+    <div id="scene1" class="scene scene-active">
+        <!-- Background layers -->
+        <div class="chalet-background">
+            <div class="wall"></div>
+            <div class="window">
+                <div class="window-frame"></div>
+                <canvas id="snowCanvas" class="snow-canvas"></canvas>
+            </div>
+            <div class="fireplace">
+                <div class="fireplace-frame"></div>
+                <canvas id="fireCanvas" class="fire-canvas"></canvas>
+            </div>
+        </div>
+        
+        <!-- Countdown Display -->
+        <div id="countdown" class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-value" id="days">00</span>
+                <span class="countdown-label">Jours</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="hours">00</span>
+                <span class="countdown-label">Heures</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-item">
+                <span class="countdown-value" id="seconds">00</span>
+                <span class="countdown-label">Secondes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 2: Exterior Mountain (After Midnight) -->
+    <div id="scene2" class="scene">
+        <div class="mountain-background">
+            <div class="sky"></div>
+            <div class="mountains"></div>
+            <div class="village">
+                <div class="house house-1"></div>
+                <div class="house house-2"></div>
+                <div class="house house-3"></div>
+                <div class="house house-4"></div>
+                <div class="house house-5"></div>
+            </div>
+            <canvas id="fireworksCanvas" class="fireworks-canvas"></canvas>
+        </div>
+        
+        <!-- Happy New Year Message -->
+        <div id="newYearMessage" class="new-year-message">
+            <h1>Bonne Année 🎉</h1>
+            <p class="year-text">2026</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

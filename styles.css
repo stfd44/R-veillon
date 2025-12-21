@@ -1,0 +1,732 @@
+/* ===== CSS Variables & Design System ===== */
+:root {
+    /* Colors - Warm Interior */
+    --fire-orange: #ff6b35;
+    --fire-red: #d32f2f;
+    --fire-yellow: #ffd700;
+    --warm-glow: rgba(255, 107, 53, 0.3);
+    --wood-dark: #3e2723;
+    --wood-medium: #5d4037;
+    --wood-light: #8d6e63;
+    
+    /* Colors - Cold Exterior */
+    --night-sky: #0a1128;
+    --night-blue: #1a2332;
+    --snow-white: #f0f8ff;
+    --ice-blue: #b3d9ff;
+    --mountain-dark: #1c2541;
+    
+    /* Colors - Festive */
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --festive-red: #e63946;
+    --festive-green: #06ffa5;
+    --festive-blue: #4cc9f0;
+    
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.4s ease;
+    --transition-slow: 0.8s ease;
+    --transition-cinematic: 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Global Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: var(--night-sky);
+}
+
+/* ===== Settings Button ===== */
+.settings-btn {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-medium);
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.settings-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 30px rgba(255, 215, 0, 0.4);
+}
+
+.settings-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ===== Settings Panel ===== */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: rgba(26, 35, 50, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 999;
+    transition: right var(--transition-slow);
+    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.settings-panel.active {
+    right: 0;
+}
+
+.settings-content {
+    padding: var(--spacing-lg) var(--spacing-md);
+    color: white;
+}
+
+.settings-content h2 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--gold);
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ice-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.form-control::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.btn {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--fire-orange));
+    color: var(--wood-dark);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Scene Container ===== */
+.scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-cinematic), visibility var(--transition-cinematic);
+}
+
+.scene-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== Scene 1: Interior Chalet ===== */
+.chalet-background {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--wood-dark) 0%, var(--wood-medium) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.wall {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(90deg, 
+            var(--wood-dark) 0px, 
+            var(--wood-dark) 100px, 
+            var(--wood-medium) 100px, 
+            var(--wood-medium) 110px
+        );
+    opacity: 0.3;
+}
+
+.window {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 400px;
+    height: 500px;
+    background: linear-gradient(180deg, var(--night-sky), var(--night-blue));
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 
+        inset 0 0 50px rgba(0, 0, 0, 0.5),
+        0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.window-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 15px solid var(--wood-dark);
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.window::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    background: var(--wood-dark);
+    z-index: 3;
+}
+
+.window::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    background: var(--wood-dark);
+    z-index: 3;
+}
+
+.snow-canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.fireplace {
+    position: absolute;
+    bottom: 5%;
+    left: 10%;
+    width: 500px;
+    height: 350px;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3));
+    border-radius: 20px 20px 0 0;
+}
+
+.fireplace-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 20px solid var(--wood-dark);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: 
+        inset 0 -20px 40px rgba(0, 0, 0, 0.8),
+        0 -10px 50px var(--warm-glow);
+}
+
+.fire-canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: blur(1px);
+}
+
+/* ===== Countdown Display ===== */
+.countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    z-index: 10;
+    padding: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 100px var(--warm-glow),
+        inset 0 0 50px rgba(255, 215, 0, 0.1);
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.countdown-value {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 
+        0 0 20px var(--fire-yellow),
+        0 0 40px var(--fire-orange),
+        0 4px 10px rgba(0, 0, 0, 0.8);
+    line-height: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.countdown-label {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ice-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.countdown-separator {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.6;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.countdown.urgent .countdown-value {
+    animation: urgentPulse 0.5s ease-in-out infinite;
+    color: var(--festive-red);
+}
+
+@keyframes urgentPulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 
+            0 0 30px var(--festive-red),
+            0 0 60px var(--fire-orange),
+            0 4px 10px rgba(0, 0, 0, 0.8);
+    }
+    50% {
+        transform: scale(1.15);
+        text-shadow: 
+            0 0 50px var(--festive-red),
+            0 0 100px var(--fire-orange),
+            0 4px 10px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* ===== Scene 2: Exterior Mountain ===== */
+.mountain-background {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.sky {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top, var(--night-blue) 0%, var(--night-sky) 100%);
+}
+
+.sky::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent),
+        radial-gradient(1px 1px at 15% 60%, white, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.mountains {
+    position: absolute;
+    bottom: 20%;
+    width: 100%;
+    height: 50%;
+}
+
+.mountains::before,
+.mountains::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.mountains::before {
+    left: 10%;
+    border-width: 0 300px 400px 300px;
+    border-color: transparent transparent var(--mountain-dark) transparent;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+}
+
+.mountains::after {
+    right: 15%;
+    border-width: 0 250px 350px 250px;
+    border-color: transparent transparent var(--mountain-dark) transparent;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+}
+
+.village {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 30px;
+}
+
+.house {
+    width: 80px;
+    height: 100px;
+    background: var(--wood-dark);
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.house::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 50px 40px 50px;
+    border-color: transparent transparent var(--wood-medium) transparent;
+}
+
+.house::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 25px;
+    background: var(--fire-yellow);
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    box-shadow: 
+        0 0 20px var(--fire-yellow),
+        0 0 40px var(--fire-orange);
+    animation: windowGlow 2s ease-in-out infinite;
+}
+
+.house-2 {
+    height: 80px;
+}
+
+.house-3 {
+    height: 120px;
+}
+
+.house-4 {
+    height: 90px;
+}
+
+.house-5 {
+    height: 110px;
+}
+
+@keyframes windowGlow {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.fireworks-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ===== New Year Message ===== */
+.new-year-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    text-align: center;
+    z-index: 20;
+    opacity: 0;
+    animation: messageAppear 2s ease-out 1s forwards;
+}
+
+@keyframes messageAppear {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.new-year-message h1 {
+    font-family: var(--font-display);
+    font-size: 6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), var(--fire-orange), var(--festive-red), var(--gold));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
+    text-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: var(--spacing-sm);
+}
+
+.year-text {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--ice-blue);
+    text-shadow: 
+        0 0 20px var(--ice-blue),
+        0 0 40px var(--festive-blue);
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1200px) {
+    .countdown-value {
+        font-size: 4rem;
+    }
+    
+    .window {
+        width: 300px;
+        height: 400px;
+    }
+    
+    .fireplace {
+        width: 400px;
+        height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .settings-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .countdown {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+    
+    .countdown-value {
+        font-size: 3rem;
+    }
+    
+    .countdown-separator {
+        display: none;
+    }
+    
+    .window {
+        width: 200px;
+        height: 300px;
+        top: 5%;
+        right: 5%;
+    }
+    
+    .fireplace {
+        width: 250px;
+        height: 180px;
+        left: 5%;
+    }
+    
+    .new-year-message h1 {
+        font-size: 3rem;
+    }
+    
+    .year-text {
+        font-size: 2rem;
+    }
+    
+    .village {
+        width: 90%;
+        gap: 15px;
+    }
+    
+    .house {
+        width: 50px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-value {
+        font-size: 2.5rem;
+    }
+    
+    .countdown-label {
+        font-size: 0.7rem;
+    }
+    
+    .new-year-message h1 {
+        font-size: 2rem;
+    }
+    
+    .year-text {
+        font-size: 1.5rem;
+    }
+}
