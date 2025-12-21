@@ -146,10 +146,10 @@ class FireParticle {
     constructor(x, y, canvas) {
         this.x = x;
         this.y = y;
-        this.vx = (Math.random() - 0.5) * 2;
-        this.vy = -(Math.random() * 3 + 2);
+        this.vx = (Math.random() - 0.5) * 1;
+        this.vy = -(Math.random() * 1.5 + 1);
         this.life = 1;
-        this.decay = Math.random() * 0.015 + 0.01;
+        this.decay = Math.random() * 0.01 + 0.005;
         this.size = Math.random() * 20 + 10;
         this.canvas = canvas;
     }
@@ -195,7 +195,7 @@ function animateFire() {
     fireCtx.clearRect(0, 0, elements.fireCanvas.width, elements.fireCanvas.height);
 
     // Create new particles
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 5; i++) {
         const x = Math.random() * elements.fireCanvas.width;
         const y = elements.fireCanvas.height - 20;
         fireParticles.push(new FireParticle(x, y, elements.fireCanvas));
