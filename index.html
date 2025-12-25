@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Célébrez le Nouvel An avec une expérience web immersive et magique - Compte à rebours, feux d'artifice et animations spectaculaires">
+    <meta name="description"
+        content="Célébrez le Nouvel An avec une expérience web immersive et magique - Compte à rebours, feux d'artifice et animations spectaculaires">
     <meta name="keywords" content="Nouvel An, Réveillon, Compte à rebours, Feux d'artifice, Bonne Année">
     <title>Réveillon du Nouvel An 🎉</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Settings Button -->
     <button id="settingsBtn" class="settings-btn" aria-label="Paramètres">
@@ -46,40 +51,69 @@
 
     <!-- Scene 1: Interior Chalet (Before Midnight) -->
     <div id="scene1" class="scene scene-active">
-        <!-- Background layers -->
-        <div class="chalet-background">
-            <div class="wall"></div>
-            <div class="window">
-                <div class="window-frame"></div>
-                <canvas id="snowCanvas" class="snow-canvas"></canvas>
+
+        <div class="chalet-room">
+            <!-- Back Wall (Vertical) -->
+            <div class="wall-back">
+                <div class="wall-texture"></div>
+                <div class="lighting-overlay"></div>
+
+                <div class="window-container">
+                    <div class="window">
+                        <div class="window-glass"></div>
+                        <div class="window-frame"></div>
+                        <div class="window-sill"></div>
+                        <canvas id="snowCanvas" class="snow-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="fireplace-container">
+                    <div class="chimney"></div>
+                    <div class="mantle">
+                        <div class="decor-garland"></div>
+                        <!-- Candles on Mantle -->
+                        <div class="candle candle-1">
+                            <div class="flame"></div>
+                        </div>
+                        <div class="candle candle-2">
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+                    <div class="fireplace">
+                        <div class="hearth-stone"></div>
+                        <div class="fire-pit">
+                            <div class="logs">
+                                <div class="log log-1"></div>
+                                <div class="log log-2"></div>
+                                <div class="log log-3"></div>
+                            </div>
+                            <canvas id="fireCanvas" class="fire-canvas"></canvas>
+                        </div>
+                    </div>
+                    <div class="fireplace-base"></div>
+                    <div class="fire-glow"></div>
+                </div>
             </div>
-            <div class="fireplace">
-                <div class="fireplace-frame"></div>
-                <canvas id="fireCanvas" class="fire-canvas"></canvas>
+
+            <!-- Floor (Horizontal Plane) -->
+            <div class="floor">
+                <div class="rug"></div>
             </div>
-        </div>
-        
-        <!-- Countdown Display -->
-        <div id="countdown" class="countdown">
-            <div class="countdown-item">
-                <span class="countdown-value" id="days">00</span>
-                <span class="countdown-label">Jours</span>
+
+            <!-- Table Decor -->
+            <div class="table-container">
+                <div class="table-top">
+                    <!-- Candles on Table -->
+                    <div class="candle candle-large">
+                        <div class="flame"></div>
+                    </div>
+                    <div class="candle candle-medium">
+                        <div class="flame"></div>
+                    </div>
+                </div>
+                <div class="table-leg"></div>
             </div>
-            <div class="countdown-separator">:</div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="hours">00</span>
-                <span class="countdown-label">Heures</span>
-            </div>
-            <div class="countdown-separator">:</div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="minutes">00</span>
-                <span class="countdown-label">Minutes</span>
-            </div>
-            <div class="countdown-separator">:</div>
-            <div class="countdown-item">
-                <span class="countdown-value" id="seconds">00</span>
-                <span class="countdown-label">Secondes</span>
-            </div>
+
         </div>
     </div>
 
@@ -87,17 +121,52 @@
     <div id="scene2" class="scene">
         <div class="mountain-background">
             <div class="sky"></div>
-            <div class="mountains"></div>
-            <div class="village">
-                <div class="house house-1"></div>
-                <div class="house house-2"></div>
-                <div class="house house-3"></div>
-                <div class="house house-4"></div>
-                <div class="house house-5"></div>
+            <div class="stars"></div>
+            <div class="moon"></div>
+            <div class="mountains-back"></div>
+            <div class="mountains-front"></div>
+
+            <div class="village-container">
+                <div class="snow-ground"></div>
+                <div class="village">
+                    <div class="house house-1">
+                        <div class="roof"></div>
+                        <div class="door"></div>
+                        <div class="window-light"></div>
+                        <!-- Smoke Effect -->
+                        <div class="chimney-small"></div>
+                        <div class="smoke-container">
+                            <div class="smoke s1"></div>
+                            <div class="smoke s2"></div>
+                            <div class="smoke s3"></div>
+                        </div>
+                    </div>
+                    <div class="house house-2">
+                        <div class="roof"></div>
+                        <div class="door"></div>
+                        <div class="window-light"></div>
+                    </div>
+                    <div class="house house-church">
+                        <div class="steeple"></div>
+                        <div class="roof"></div>
+                        <div class="door"></div>
+                        <div class="window-light large"></div>
+                    </div>
+                    <div class="house house-3">
+                        <div class="roof"></div>
+                        <div class="door"></div>
+                        <div class="window-light"></div>
+                    </div>
+                    <div class="house house-4">
+                        <div class="roof"></div>
+                        <div class="door"></div>
+                        <div class="window-light"></div>
+                    </div>
+                </div>
             </div>
             <canvas id="fireworksCanvas" class="fireworks-canvas"></canvas>
         </div>
-        
+
         <!-- Happy New Year Message -->
         <div id="newYearMessage" class="new-year-message">
             <h1>Bonne Année 🎉</h1>
@@ -105,6 +174,30 @@
         </div>
     </div>
 
+    <!-- Countdown Display (Overlay) -->
+    <div id="countdown" class="countdown">
+        <div class="countdown-item">
+            <span class="countdown-value" id="days">00</span>
+            <span class="countdown-label">Jours</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+            <span class="countdown-value" id="hours">00</span>
+            <span class="countdown-label">Heures</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+            <span class="countdown-value" id="minutes">00</span>
+            <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-separator">:</div>
+        <div class="countdown-item">
+            <span class="countdown-value" id="seconds">00</span>
+            <span class="countdown-label">Secondes</span>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>

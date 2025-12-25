@@ -76,39 +76,68 @@ elements.saveSettings.addEventListener('click', () => {
 });
 
 // ===== Countdown Logic =====
+let countdownInterval;
+let sceneToggleInterval;
+
 function updateCountdown() {
     const now = new Date();
-    const difference = targetDate - now;
+    const timeLeft = targetDate - now;
 
-    if (difference <= 0) {
-        // It's midnight or past!
-        if (currentScene === 1 && !transitionInProgress) {
-            triggerMidnightTransition();
+    if (timeLeft <= 0) {
+        // New Year Reached!
+        clearInterval(countdownInterval);
+        clearInterval(sceneToggleInterval); // Stop switching
+
+        // Force Scene 2 (Fireworks)
+        elements.scene1.classList.remove('scene-active');
+        elements.scene2.classList.add('scene-active');
+
+        elements.countdown.style.display = 'none';
+        if (elements.newYearMessage) { // Check if element exists
+            elements.newYearMessage.classList.add('visible');
         }
-        elements.days.textContent = '00';
-        elements.hours.textContent = '00';
-        elements.minutes.textContent = '00';
-        elements.seconds.textContent = '00';
+
+        // Start fireworks
+        startFireworks();
+
         return;
     }
 
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
+    // Update DOM
     elements.days.textContent = String(days).padStart(2, '0');
     elements.hours.textContent = String(hours).padStart(2, '0');
     elements.minutes.textContent = String(minutes).padStart(2, '0');
     elements.seconds.textContent = String(seconds).padStart(2, '0');
 
-    // Add urgent class when less than 1 minute remaining
-    if (difference < CONFIG.urgentThreshold) {
+    // Add urgent class if close
+    if (days === 0 && hours === 0 && minutes < 1) {
         elements.countdown.classList.add('urgent');
     } else {
-        elements.countdown.classList.remove('urgent');
+        elements.countdown.classList.remove('urgent'); // Ensure it's removed if not urgent
     }
 }
+
+// Toggle Scenes every 10 seconds
+function toggleScene() {
+    if (elements.scene1.classList.contains('scene-active')) {
+        elements.scene1.classList.remove('scene-active');
+        elements.scene2.classList.add('scene-active');
+    } else {
+        elements.scene2.classList.remove('scene-active');
+        elements.scene1.classList.add('scene-active');
+    }
+}
+
+// Initialize intervals
+sceneToggleInterval = setInterval(toggleScene, 10000);
+countdownInterval = setInterval(updateCountdown, 1000);
+updateCountdown(); // Initial call to display countdown immediately
+
 
 // ===== Scene Transition =====
 function triggerMidnightTransition() {
@@ -146,39 +175,39 @@ class FireParticle {
     constructor(x, y, canvas) {
         this.x = x;
         this.y = y;
-        this.vx = (Math.random() - 0.5) * 1;
-        this.vy = -(Math.random() * 1.5 + 1);
+        this.vx = (Math.random() - 0.5) * 0.5; // More horizontal spread
+        this.vy = -(Math.random() * 1.5 + 1);  // Faster upward movement
         this.life = 1;
-        this.decay = Math.random() * 0.01 + 0.005;
+        this.decay = Math.random() * 0.02 + 0.01;
         this.size = Math.random() * 20 + 10;
+        this.hue = Math.random() * 20; // 0-20 Range (Red-Orange)
         this.canvas = canvas;
+        this.angle = Math.random() * Math.PI * 2;
     }
 
     update() {
+        this.life -= this.decay;
+        // Add sinusoidal wave motion for "dancing" flames
+        this.x += Math.sin(this.life * 10 + this.angle) * 0.5;
         this.x += this.vx;
         this.y += this.vy;
-        this.life -= this.decay;
-        this.vy -= 0.1; // Gravity effect upward
+        this.size *= 0.95; // Shrink as it rises
     }
 
     draw(ctx) {
         if (this.life <= 0) return;
 
+        ctx.beginPath();
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
 
-        if (this.life > 0.7) {
-            gradient.addColorStop(0, `rgba(255, 255, 200, ${this.life})`);
-            gradient.addColorStop(0.3, `rgba(255, 200, 0, ${this.life * 0.8})`);
-            gradient.addColorStop(0.6, `rgba(255, 100, 0, ${this.life * 0.5})`);
-            gradient.addColorStop(1, `rgba(255, 50, 0, 0)`);
-        } else {
-            gradient.addColorStop(0, `rgba(255, 150, 0, ${this.life})`);
-            gradient.addColorStop(0.5, `rgba(255, 50, 0, ${this.life * 0.5})`);
-            gradient.addColorStop(1, `rgba(100, 0, 0, 0)`);
-        }
+        // Richer colors for additive blending
+        gradient.addColorStop(0, `hsla(${40 + this.hue}, 100%, 60%, ${this.life})`); // Core (Yellow-Orange)
+        gradient.addColorStop(0.4, `hsla(${20 + this.hue}, 100%, 50%, ${this.life * 0.8})`); // Middle (Orange-Red)
+        gradient.addColorStop(1, `hsla(${0}, 100%, 20%, 0)`); // Outer (Fade)
 
         ctx.fillStyle = gradient;
-        ctx.fillRect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
     }
 
     isDead() {
@@ -192,21 +221,33 @@ const fireCtx = setupCanvas(elements.fireCanvas);
 function animateFire() {
     if (currentScene !== 1) return;
 
+    // Use specific clear for transparent background, but we want trails?
+    // No, standard clear is better for crisp flames, the glow comes from the overlap.
     fireCtx.clearRect(0, 0, elements.fireCanvas.width, elements.fireCanvas.height);
 
+    // Key: Additive Blending for "Fire" look
+    fireCtx.globalCompositeOperation = 'lighter';
+
     // Create new particles
-    for (let i = 0; i < 5; i++) {
-        const x = Math.random() * elements.fireCanvas.width;
-        const y = elements.fireCanvas.height - 20;
+    // Spawn more particles for a denser fire
+    const particleCount = 5;
+    for (let i = 0; i < particleCount; i++) {
+        const centerX = elements.fireCanvas.width / 2;
+        const spread = elements.fireCanvas.width * 0.15; // Tighter source
+        const x = centerX + (Math.random() - 0.5) * spread;
+        const y = elements.fireCanvas.height - 10;
         fireParticles.push(new FireParticle(x, y, elements.fireCanvas));
     }
 
-    // Update and draw particles
+    // Update and draw
     fireParticles = fireParticles.filter(particle => {
         particle.update();
         particle.draw(fireCtx);
         return !particle.isDead();
     });
+
+    // Reset composite operation for other draws if shared (though usually separate ctx)
+    fireCtx.globalCompositeOperation = 'source-over';
 
     requestAnimationFrame(animateFire);
 }
@@ -219,7 +260,7 @@ class SnowFlake {
         this.y = Math.random() * canvas.height - canvas.height;
         this.size = Math.random() * 3 + 1;
         this.speed = Math.random() * 1 + 0.5;
-        this.drift = Math.random() * 0.5 - 0.25;
+        this.drift = Math.random() * 0.16 - 0.08;
     }
 
     update() {
