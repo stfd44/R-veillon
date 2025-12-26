@@ -1230,30 +1230,85 @@ body {
     }
 
     .countdown {
-        flex-direction: column;
-        gap: var(--spacing-sm);
-        padding: var(--spacing-md);
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* Allow wrapping */
+        justify-content: center;
+        gap: 10px;
+        padding: 5px;
+        width: 100%;
+        top: 5%;
+        background: rgba(0, 0, 0, 0.4);
     }
 
     .countdown-value {
-        font-size: 3rem;
+        font-size: 1.5rem;
     }
 
     .countdown-separator {
         display: none;
+        /* Hide separators for cleaner wrapped look */
     }
 
-    .window {
-        width: 200px;
-        height: 300px;
-        top: 5%;
-        right: 5%;
+    .countdown-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 60px;
+    }
+
+    .countdown-label {
+        font-size: 0.6rem;
+    }
+
+    /* --- SIMPLIFIED MOBILE CHALET SCENE --- */
+    .chalet-room {
+        perspective: none;
+        /* Disable 3D */
+    }
+
+    .wall-back {
+        transform: none;
+        /* Remove 3D pushback */
+    }
+
+    /* Remove "beams" (log texture) */
+    .wall-texture {
+        background-image: none;
+        background: #2a1b15;
+        /* Solid dark wood color */
+        box-shadow: none;
+    }
+
+    /* Hide complex 3D decor */
+    /* Hide Window and Complex Decor */
+    .floor,
+    .rug,
+    .table-container,
+    .window-container {
+        display: none !important;
+    }
+
+    /* Center Fireplace as main element */
+    .fireplace-container {
+        bottom: 15%;
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+        width: 300px;
+        /* Fixed width */
+        height: auto;
     }
 
     .fireplace {
-        width: 250px;
-        height: 180px;
-        left: 5%;
+        overflow: visible;
+        width: 100%;
+    }
+
+    .mantle {
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+        border-radius: 5px;
     }
 
     .new-year-message h1 {
@@ -1266,18 +1321,26 @@ body {
 
     .village {
         width: 90%;
-        gap: 15px;
+        gap: 10px;
+        bottom: 150px;
+        /* Lift village up */
+    }
+
+    .snow-ground {
+        bottom: 0;
+        height: 150px;
     }
 
     .house {
-        width: 50px;
-        height: 70px;
+        width: 40px;
+        height: 60px;
     }
 }
 
 @media (max-width: 480px) {
     .countdown-value {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
+        /* Reduced from 2.5rem which was breaking layout */
     }
 
     .countdown-label {
@@ -1290,5 +1353,45 @@ body {
 
     .year-text {
         font-size: 1.5rem;
+    }
+
+    .fireplace-container {
+        width: 100%;
+        transform: translateX(-50%) scale(0.7);
+    }
+}
+
+/* Ultra-narrow screens (e.g. Galaxy Fold folded, old iPhones) */
+@media (max-width: 350px) {
+    .countdown {
+        flex-direction: column;
+        /* Stack vertically for legibility */
+        align-items: center;
+        gap: 2px;
+        top: 2%;
+    }
+
+    .countdown-item {
+        flex-direction: row;
+        /* Value + Label side-by-side */
+        justify-content: center;
+        align-items: baseline;
+        width: 100%;
+        gap: 5px;
+        min-width: auto;
+    }
+
+    .countdown-value {
+        font-size: 1.8rem;
+    }
+
+    .countdown-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .fireplace-container {
+        transform: translateX(-50%) scale(0.6);
+        bottom: 10%;
     }
 }

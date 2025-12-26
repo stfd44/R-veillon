@@ -31,12 +31,20 @@ const elements = {
 // ===== Settings Management =====
 function loadTargetDate() {
     const saved = localStorage.getItem('newYearTargetDate');
-    return saved ? new Date(saved) : new Date(CONFIG.defaultTargetDate);
+    if (saved) {
+        const date = new Date(saved);
+        if (date > new Date()) {
+            return date;
+        }
+    }
+    // Fallback if no save or saved date is in the past
+    return new Date(CONFIG.defaultTargetDate);
 }
 
 function saveTargetDate(date) {
     localStorage.setItem('newYearTargetDate', date.toISOString());
     targetDate = date;
+    // Restart logic if needed, but simple reload works best for user
 }
 
 function initializeSettings() {
